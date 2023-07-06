@@ -7,5 +7,5 @@ client/node_modules/
 server/node_modules/
 
 # large files
-client/assets/videos
+client/src/assets/videos
 
