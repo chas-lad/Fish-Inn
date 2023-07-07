@@ -75,7 +75,6 @@ const getAdminAccount = (async (req, res) => {
       else{
         res.json(adminAccount.rows[0])
       }
-      res.json(adminAccount);
       
     } catch (err) {
       console.error(err.message);
@@ -84,20 +83,22 @@ const getAdminAccount = (async (req, res) => {
 
   const updateAdminAccountName = (async (req, res) => {
     try {
-      const { id } = req.params;
-      const { first_name } = req.body;
+      const { user_name } = req.params;
+      const { firstNameToSend, surnameToSend, emailToSend} = req.body;
       const updateAdminAccountName = await pool.query(
         `
         UPDATE 
             admin_accounts
         SET 
-            first_name = $1
+            first_name = $2,
+            surname = $3,
+            email = $4
         WHERE
-            admin_accounts_id = $2
+            user_name = $1
         `,
-        [first_name, id]);
+        [user_name, firstNameToSend, surnameToSend, emailToSend]);
   
-      res.json("Admin Account Name was updated!");
+      res.json("Details have been updated");
     } catch (err) {
       console.error(err.message);
     }
