@@ -42,7 +42,7 @@ export default function Navbar(){
                   <Link to="/menu" className={className}>Menu</Link>
                 </li>
                 <li>
-                  <Link to="/staff" className={className}>Staff</Link>
+                  <Link to="/employeeList" className={className}>Employees</Link>
                 </li>
                 <li>
                   <Link to="/profile" className={className}>Profile</Link>

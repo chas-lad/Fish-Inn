@@ -81,7 +81,7 @@ const getAdminAccount = (async (req, res) => {
     }
   });
 
-  const updateAdminAccountName = (async (req, res) => {
+  const updateAdminAccountDetails = (async (req, res) => {
     try {
       const { user_name } = req.params;
       const { firstNameToSend, surnameToSend, emailToSend} = req.body;
@@ -128,6 +128,6 @@ module.exports =  {
     createAdminAccount,
     getAdminAccounts,
     getAdminAccount,
-    updateAdminAccountName,
+    updateAdminAccountDetails,
     deleteAdminAccount
 };

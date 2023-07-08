@@ -5,7 +5,7 @@ const  {
     createAdminAccount,
     getAdminAccounts,
     getAdminAccount,
-    updateAdminAccountName,
+    updateAdminAccountDetails,
     deleteAdminAccount
 } = require('../controllers/logins.js')
 
@@ -19,7 +19,7 @@ router.get("/", getAdminAccounts);
 router.get("/:user_name", getAdminAccount);
 
 // update an admin account name
-router.put("/:user_name", updateAdminAccountName);
+router.put("/:user_name", updateAdminAccountDetails);
 
 // delete an admin account
 router.delete("/:user_name", deleteAdminAccount);

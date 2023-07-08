@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useState, useEffect } from "react";
 import Input from "../Login/Input";
-import { Calendar} from 'primereact/calendar';
 
 
 export default function Profile(){
@@ -15,10 +14,12 @@ export default function Profile(){
     const [new_first_name, setNewFirstName] = useState("");
     const [new_surname, setNewSurname] = useState("");
     const [new_email, setNewEmail] = useState("");
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        console.log('here')
+        setError("");
         fetchDetails();
+        console.log('yo')
       }, [detailsChanged]);
 
     const user_name = localStorage.getItem("user");
@@ -52,9 +53,11 @@ export default function Profile(){
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-
-          if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email))){
-            // setError("Please enter a valid email address")
+        
+          console.log(new_email)
+          console.log(error)
+          if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(new_email))){
+            setError("Please enter a valid email address");
             return
           }
           
@@ -85,6 +88,7 @@ export default function Profile(){
         <Navbar/>
             <div className="bg-hero-pattern">
                 <h1>Profile</h1>
+                {error && <p>{error}</p>}
                 {detailsChanged && <p>Details have been updated</p>}
                 <div className="flex justify-center w-full items-center ">
                     <div className="text-center pr-20">
@@ -93,21 +97,19 @@ export default function Profile(){
                             <li>User name: {user_name}</li>
                             <li>First name: {first_name}</li>
                             <li>Surname: {surname}</li>
-                            <li>DOB: {dob}</li>
+                            <li>DOB: {dob.substring(0, 10)}</li>
                             <li>Email: {email}</li>
                         </ul>
                     </div>
                     <div className="text-center">
                         <h2>Edit Personal Details</h2>
                         <p className="mb-5"> Submit the detail(s) you want to change below </p>
-                        
                             <form className="text-xl font-nunito-regular text-left inline-block border-solid border-black border-4 rounded-lg p-10 bg-white" onSubmit={handleSubmit}>
                             <Input placeholder="First Name" value={new_first_name} onChange={e => setNewFirstName(e.target.value)}/>
                             <Input placeholder="Surname" value={new_surname} onChange={e => setNewSurname(e.target.value)}/>
                             <Input placeholder="Email" value={new_email} onChange={e => setNewEmail(e.target.value)}/>
                             <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-5" type="submit">Change</button>
                             </form>
-                        
                     </div>
                 </div>
             </div>
