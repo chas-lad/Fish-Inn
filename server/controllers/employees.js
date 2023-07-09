@@ -49,6 +49,7 @@ const getEmployeeSchedules = (async (req, res) => {
     const employeeSchedules = await pool.query(
       `
       SELECT
+          e.emp_id,
           e.first_name,
           e.surname,
           s.start_date_time,

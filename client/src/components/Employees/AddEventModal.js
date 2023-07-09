@@ -1,27 +1,16 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Datetime from "react-datetime";
-import { Dropdown } from 'primereact/dropdown'
+import { Button } from "primereact/button";
 
 export default function AddEventModal({isOpen, onClose, onEventAdded, change, employees}) {
-    // const [employeeID, setEmployeeID] = useState()
     const [employeeName, setEmployeeName] = useState("")
     const [start, setStart] = useState(new Date());
     const [end, setEnd] = useState(new Date());
     
-
     const onSubmit = (event) => {
         event.preventDefault();
         
-        //console.log(employeeID)
-        // console.log(start)
-        // console.log(end)
-
-        // Getting the employee name from the ID
-        //console.log(employeeID)
-        // const employee = employees?.find((x) => x.emp_id === employeeID)
-        // console.log(employee)
-        // const employeeName = employee.first_name + employee.surname
         onEventAdded({
             employeeName,
             start,
@@ -29,11 +18,14 @@ export default function AddEventModal({isOpen, onClose, onEventAdded, change, em
         })
         onClose()
     }
+
+    const handleClose = () => {
+        onClose();
+    }
     
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose}>
             <form onSubmit={onSubmit}>
-                {/* <Dropdown value={employeeID} onChange={e => setEmployeeID(e.target.value)} options={employees} optionLabel="name" placeholder="Select an employee" className="w-full md:w-14rem" /> */}
                 <select onChange={e => {
                             const employee = employees.find(({emp_id}) => emp_id == e.target.value)
                             const employeeName = employee.first_name + " " + employee.surname
@@ -65,6 +57,7 @@ export default function AddEventModal({isOpen, onClose, onEventAdded, change, em
 
                 <button>Add Event</button>
             </form>
+                <Button onClick={handleClose}>Close</Button>
         </Modal>
     )
 }

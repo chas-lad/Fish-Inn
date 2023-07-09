@@ -11,12 +11,14 @@ import moment from 'moment'
 
 import EmployeeHeading from "./EmployeeHeading";
 import AddEventModal from "./AddEventModal";
+import SelectEventModal from "./SelectEventModal";
 
 
 export default function EmployeeRota(){
     const [employees, setEmployees] = useState([]);
     const [addEventModalOpen, setAddEventModalOpen] = useState(false);
     const [selectEventModalOpen, setSelectEventModalOpen] = useState(false);
+    const [selectedEventInfo, setSelectedEventInfo] = useState();
     const [events, setEvents] = useState([]);
     const [selectedEmployeeID, setSelectedEmployeeID] = useState(null)
     const calendarRef = useRef(null);
@@ -45,24 +47,28 @@ export default function EmployeeRota(){
 
     // Function to manipulate the Event Object directly. An 'Event Object' is a JS object that is used to store event info.
     // We get hold of the components ref and call the getApi() method on this component to get access to the calendars events.
+    // This function adds an event/schedule directly to our calendar API
+    // NOTE it is important to add the event/scehdule directly to the current mounted calendar component
+    // as well as the database. This is because we only pull all schedules from our database when our calendar component
+    // is first mounted
+    // firing .addEvent() in this function causes the eventAdd prop's function to be fired in the Calendar
+
     const onEventAdded = event => {
         let calendarApi = calendarRef.current.getApi()
-        console.log(selectedEmployeeID)
         calendarApi.addEvent({
             start: moment(event.start).toDate(),
             end: moment(event.end).toDate(),
-            title: event.employeeName,
+            title: event.employeeName
         })
     }
 
+    // Add event/schedule to our database
     async function handleEventAdd(data) {
         try {        
         
             const emp_id = selectedEmployeeID
             const start_date_time = (data.event.startStr).substring(0,19)
             const end_date_time = (data.event.endStr).substring(0,19)
-            console.log(start_date_time)
-            console.log(end_date_time)
 
             const body = {  emp_id,
                             start_date_time,
@@ -84,6 +90,7 @@ export default function EmployeeRota(){
         }
     }
 
+    // Pull all events/schedules from our database to populate our schedule
     async function handleDatesSet(data) {
         const response = await fetch("http://localhost:3000/employees/schedules");
         const jsonData = await response.json();
@@ -92,14 +99,45 @@ export default function EmployeeRota(){
             tempArrayOfSchedules.push({
                 start:  moment(schedule.start_date_time).toDate(),
                 end: moment(schedule.end_date_time).toDate(),
-                title: (schedule.first_name + " " + schedule.surname)
+                title: (schedule.first_name + " " + schedule.surname),
+                extendedProps: {
+                    emp_id: schedule.emp_id.toString()
+                  }
             })
         })
-        console.log(jsonData)
-        console.log(tempArrayOfSchedules);
         setEvents(tempArrayOfSchedules);
     }
 
+    // Handle what should happen when we click on an event/schedule 
+    const handleEventSelect = info => {
+        setSelectEventModalOpen(true);
+        console.log(info.event)
+        console.log(selectEventModalOpen)
+        setSelectedEventInfo(info.event)
+    }
+
+    // delete from the calendar object via API
+    // firing .remove() in this function causes the eventRemove prop's function to be fired in the Calendar
+    const onEventDeleted = event => {
+        let calendarApi = calendarRef.current.getApi();
+        
+        // It seems the only way to remove an event is by getting the event by ID, I don't want to do
+        // this however - I shouldn't have to change my db schema to accomodate for this. I could get around
+        // this by ignoring the two step process of removing the event from the calendar and THEN the database. And
+        // just go straight to removing it from the database then force a rerender straigh after so that we then pull from the database.
+        // 
+
+    };
+
+    // delete from our database
+    const handleEventDelete = (data) => {
+        try {        
+        console.log('deleting from database')
+          
+        } catch (err) {
+          console.error(err.message);
+        }
+    }
 
     return (
         <>
@@ -115,18 +153,21 @@ export default function EmployeeRota(){
                         ref={calendarRef}
                         events={events}
                         eventAdd={event => handleEventAdd(event)}
+                        eventRemove={event => handleEventDelete(event)}
                         plugins={[ timeGridPlugin ]}
                         initialView="timeGridWeek"
                         displayEventEnd= {true}
                         slotDuration='00:30:00'
                         selectable={true}
-                        // eventClick={(info) => handleEventSelect(info)}
+                        eventClick={(info) => handleEventSelect(info)}
                         editable={true}
                         datesSet = {(date) => handleDatesSet(date)}
                     />
                 </div>
 
                 <AddEventModal isOpen={addEventModalOpen} onClose={() => setAddEventModalOpen(false)} onEventAdded={event => onEventAdded(event)} change={handleEmployeeState} employees={employees}/>
+                <SelectEventModal isOpen={selectEventModalOpen} onClose={() => setSelectEventModalOpen(false)} eventInfo={selectedEventInfo} onEventDeleted={onEventDeleted}/>
+
                 </section>
 
             </div>

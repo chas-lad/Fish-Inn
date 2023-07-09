@@ -2,59 +2,36 @@ import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Datetime from "react-datetime";
 import { Dropdown } from 'primereact/dropdown'
+import { Button } from "primereact/button";
 
-export default function SelectEventModal({isOpen, onClose, onEventAdded, change, employees}) {
+export default function SelectEventModal({isOpen, onClose, eventInfo, onEventDeleted}) {
 
     const [employeeName, setEmployeeName] = useState("")
     const [start, setStart] = useState(new Date());
     const [end, setEnd] = useState(new Date());
     
 
-    const onSubmit = (event) => {
-        // event.preventDefault();
-        // onEventAdded({
-        //     employeeName,
-        //     start,
-        //     end
-        // });
-        // onClose();
+    const handleDelete = () => {
+        console.log('DELETING')
+        onEventDeleted();
+        onClose();
+    }
+    const handleClose = () => {
+        onClose();
     }
     
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose}>
-            <form onSubmit={onSubmit}>
-                {/* <Dropdown value={employeeID} onChange={e => setEmployeeID(e.target.value)} options={employees} optionLabel="name" placeholder="Select an employee" className="w-full md:w-14rem" /> */}
-                <select onChange={e => {
-                            const employee = employees.find(({emp_id}) => emp_id == e.target.value)
-                            const employeeName = employee.first_name + " " + employee.surname
-                            setEmployeeName(employeeName);
-                            change(e.target.value);
-                            }}
-                >
-                    {employees
-                        ? employees.map((employee) => {
-                                return(
-                                    // NOTE value is what is provided to e.target.value
-                                    <option key={employee.emp_id} value={employee.emp_id}> 
-                                        {employee.first_name} {employee.surname}
-                                    </option>
-                                );
-                            })
-                        : 'No current employees'}
-                </select>
-
-                <div>
-                    <label>Start Datetime</label>
-                    <Datetime value={start} onChange={date => setStart(date)} />
-                </div>
-
-                <div>
-                    <label>End Datetime</label>
-                    <Datetime value={end} onChange={date => setEnd(date)} />
-                </div>
-
-                <button>Add Event</button>
-            </form>
+            
+            <h1>Select info</h1>
+            <p>Employee Name: {eventInfo && eventInfo.title}</p>
+            <p>Shift Date: {eventInfo && (eventInfo.startStr).substring(0,10)}</p>
+            <p>Shift Start Time: {eventInfo && (eventInfo.startStr).substring(11,16)}</p>
+            <p>Shift End Time: {eventInfo && (eventInfo.endStr).substring(11,16)}</p>
+    
+            <Button onClick={handleDelete}>Delete Shift</Button>
+            <Button onClick={handleClose}>Close</Button>
+        
         </Modal>
     )
 }
