@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "react-datetime/css/react-datetime.css"
 import './index.css';
 import App from './App';
 

@@ -1,4 +1,6 @@
 import React from "react";
+import Modal from "react-modal"
+
 import {
   BrowserRouter,
   Routes,
@@ -15,6 +17,8 @@ import Menu from "./components/Main/Menu";
 import Profile from "./components/Main/Profile";
 import EmployeeList from "./components/Employees/EmployeeList";
 import EmployeeRota from "./components/Employees/EmployeeRota";
+
+Modal.setAppElement('#root')
 
 function App() {
   return (

@@ -66,8 +66,43 @@ const getEmployeeSchedules = (async (req, res) => {
   }
 });
 
+
+const createEmployeeSchedule = (async (req,res)=>{
+  try{
+      const { emp_id } = req.params;
+      console.log(emp_id)
+      const { start_date_time, end_date_time } = req.body; 
+      const newEmployeeSchedule = await pool.query(
+          `
+          INSERT INTO
+              schedule
+          (
+            emp_id,   
+            start_date_time, 
+            end_date_time   
+          ) 
+          VALUES
+          (
+              $1,
+              $2,
+              $3
+          )
+          RETURNING 
+              *
+           `
+          ,
+          [emp_id, start_date_time, end_date_time]);
+      res.json(newEmployeeSchedule);
+      console.log(req.body);
+  }
+  catch (err) {
+      console.error(err.message);
+  }
+});
+
 module.exports =  {
   getEmployees,
   getEmployee,
-  getEmployeeSchedules
+  getEmployeeSchedules,
+  createEmployeeSchedule
 };

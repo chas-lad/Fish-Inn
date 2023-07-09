@@ -4,7 +4,8 @@ const router = express.Router()
 const  { 
     getEmployees,
     getEmployee,
-    getEmployeeSchedules
+    getEmployeeSchedules,
+    createEmployeeSchedule
 } = require('../controllers/employees.js')
 
 
@@ -16,5 +17,8 @@ router.get("/schedules", getEmployeeSchedules);
 
 // get an admin account
 router.get("/:emp_id", getEmployee);
+
+// get an admin account
+router.post("/schedules/:emp_id", createEmployeeSchedule);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import Modal from 'react-modal'
 import Navbar from "./../Main/Navbar";
 import Footer from "./../Main/Footer";
 import EmployeeHeading from "./EmployeeHeading";
@@ -10,7 +10,6 @@ export default function EmployeeList(){
     const [employees, setEmployees] = useState([]);
 
 
-    
     useEffect(() => {
         fetchEmployees();
       }, [employees]);
