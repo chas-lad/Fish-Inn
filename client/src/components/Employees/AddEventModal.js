@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 
 export default function AddEventModal({isOpen, onClose, onEventAdded, change, employees}) {
     const [employeeName, setEmployeeName] = useState("")
+    const [employeeIdToAdd, setEmployeeIdToAdd] = useState(0);
     const [start, setStart] = useState(new Date());
     const [end, setEnd] = useState(new Date());
     
@@ -12,6 +13,7 @@ export default function AddEventModal({isOpen, onClose, onEventAdded, change, em
         event.preventDefault();
         
         onEventAdded({
+            employeeIdToAdd,
             employeeName,
             start,
             end
@@ -27,8 +29,9 @@ export default function AddEventModal({isOpen, onClose, onEventAdded, change, em
         <Modal isOpen={isOpen} onRequestClose={onClose}>
             <form onSubmit={onSubmit}>
                 <select onChange={e => {
-                            const employee = employees.find(({emp_id}) => emp_id == e.target.value)
-                            const employeeName = employee.first_name + " " + employee.surname
+                            const employee = employees.find(({emp_id}) => emp_id == e.target.value);
+                            const employeeName = employee.first_name + " " + employee.surname;
+                            setEmployeeIdToAdd(employee.emp_id);
                             setEmployeeName(employeeName);
                             change(e.target.value);
                             }}

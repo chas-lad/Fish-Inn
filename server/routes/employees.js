@@ -5,7 +5,8 @@ const  {
     getEmployees,
     getEmployee,
     getEmployeeSchedules,
-    createEmployeeSchedule
+    createEmployeeSchedule,
+    deleteEmployeeSchedule
 } = require('../controllers/employees.js')
 
 
@@ -20,5 +21,8 @@ router.get("/:emp_id", getEmployee);
 
 // get an admin account
 router.post("/schedules/:emp_id", createEmployeeSchedule);
+
+// get an admin account
+router.delete("/schedules/:emp_id", deleteEmployeeSchedule);
 
 module.exports = router;

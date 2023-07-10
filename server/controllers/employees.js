@@ -101,9 +101,31 @@ const createEmployeeSchedule = (async (req,res)=>{
   }
 });
 
+const deleteEmployeeSchedule = (async (req,res)=>{
+  try{
+      const { emp_id } = req.params;
+      const { start_date_time } = req.body; 
+      const deletedEmployeeSchedule = await pool.query(
+          `
+          DELETE FROM
+            schedule
+          WHERE
+            emp_id = $1 AND start_date_time = $2 
+          `
+          ,
+          [emp_id, start_date_time]);
+      res.json(deletedEmployeeSchedule);
+      console.log(req.body);
+  }
+  catch (err) {
+      console.error(err.message);
+  }
+});
+
 module.exports =  {
   getEmployees,
   getEmployee,
   getEmployeeSchedules,
-  createEmployeeSchedule
+  createEmployeeSchedule,
+  deleteEmployeeSchedule
 };

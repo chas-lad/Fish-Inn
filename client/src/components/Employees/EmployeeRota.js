@@ -55,7 +55,9 @@ export default function EmployeeRota(){
 
     const onEventAdded = event => {
         let calendarApi = calendarRef.current.getApi()
+        
         calendarApi.addEvent({
+            id: (event.employeeIdToAdd).toString() + moment(event.start).format('YYYY-MM-DD'),
             start: moment(event.start).toDate(),
             end: moment(event.end).toDate(),
             title: event.employeeName
@@ -97,6 +99,7 @@ export default function EmployeeRota(){
         const tempArrayOfSchedules = [];
         jsonData.map((schedule) => {
             tempArrayOfSchedules.push({
+                id: (schedule.emp_id).toString() + (schedule.start_date_time).substring(0,10),
                 start:  moment(schedule.start_date_time).toDate(),
                 end: moment(schedule.end_date_time).toDate(),
                 title: (schedule.first_name + " " + schedule.surname),
@@ -111,29 +114,30 @@ export default function EmployeeRota(){
     // Handle what should happen when we click on an event/schedule 
     const handleEventSelect = info => {
         setSelectEventModalOpen(true);
-        console.log(info.event)
-        console.log(selectEventModalOpen)
         setSelectedEventInfo(info.event)
     }
 
     // delete from the calendar object via API
     // firing .remove() in this function causes the eventRemove prop's function to be fired in the Calendar
-    const onEventDeleted = event => {
+    const onEventDeleted = (event) => {
         let calendarApi = calendarRef.current.getApi();
-        
-        // It seems the only way to remove an event is by getting the event by ID, I don't want to do
-        // this however - I shouldn't have to change my db schema to accomodate for this. I could get around
-        // this by ignoring the two step process of removing the event from the calendar and THEN the database. And
-        // just go straight to removing it from the database then force a rerender straigh after so that we then pull from the database.
-        // 
-
+        let eventToRemove = calendarApi.getEventById(event.id)
+        eventToRemove.remove();
     };
 
     // delete from our database
-    const handleEventDelete = (data) => {
+    async function handleEventDelete(data) {
         try {        
-        console.log('deleting from database')
-          
+        
+        let emp_id = Number((data.event.id).substring(0,1));
+        let start_date_time = (data.event.startStr).substring(0,19)
+        const body = { start_date_time };
+        const response = await fetch(`http://localhost:3000/employees/schedules/${emp_id}`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+        const jsonData = await response.json();
         } catch (err) {
           console.error(err.message);
         }

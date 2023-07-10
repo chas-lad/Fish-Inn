@@ -13,7 +13,8 @@ export default function SelectEventModal({isOpen, onClose, eventInfo, onEventDel
 
     const handleDelete = () => {
         console.log('DELETING')
-        onEventDeleted();
+        onEventDeleted(eventInfo);
+        
         onClose();
     }
     const handleClose = () => {
