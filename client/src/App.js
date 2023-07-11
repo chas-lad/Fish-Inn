@@ -13,7 +13,7 @@ import Signup from "./components/Login/Signup";
 import Error from "./components/Errors/Error";
 import Home from "./components/Main/Home";
 import Analytics from "./components/Main/Analytics";
-import Menu from "./components/Main/Menu";
+import Menu from "./components/Menu/Menu";
 import Profile from "./components/Main/Profile";
 import EmployeeList from "./components/Employees/EmployeeList";
 import EmployeeRota from "./components/Employees/EmployeeRota";

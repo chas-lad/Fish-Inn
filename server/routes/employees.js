@@ -16,13 +16,13 @@ router.get("/", getEmployees);
 // get all employee schedules
 router.get("/schedules", getEmployeeSchedules);
 
-// get an admin account
+// get an employee account
 router.get("/:emp_id", getEmployee);
 
-// get an admin account
+// create an employee schedule
 router.post("/schedules/:emp_id", createEmployeeSchedule);
 
-// get an admin account
+// delete an employee schedule
 router.delete("/schedules/:emp_id", deleteEmployeeSchedule);
 
 module.exports = router;

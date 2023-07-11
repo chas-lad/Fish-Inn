@@ -24,8 +24,7 @@ export default function SelectEventModal({isOpen, onClose, eventInfo, onEventDel
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose}>
             
-            <h1>Select info</h1>
-            <p>Employee Name: {eventInfo && eventInfo.title}</p>
+            <h1>{eventInfo && eventInfo.title}</h1>
             <p>Shift Date: {eventInfo && (eventInfo.startStr).substring(0,10)}</p>
             <p>Shift Start Time: {eventInfo && (eventInfo.startStr).substring(11,16)}</p>
             <p>Shift End Time: {eventInfo && (eventInfo.endStr).substring(11,16)}</p>

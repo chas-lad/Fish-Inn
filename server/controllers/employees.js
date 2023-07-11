@@ -28,7 +28,7 @@ const getEmployee = (async (req, res) => {
       WHERE emp_id = $1
       `, 
       [emp_id]);
-    console.log(employee)
+      
     if(employee.rowCount === 0){
       res.json({
           "error": "404",

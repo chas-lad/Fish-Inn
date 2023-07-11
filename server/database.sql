@@ -35,20 +35,10 @@ CREATE TABLE orders(
     review_comment     VARCHAR(200)
 );
 
-CREATE TABLE suppliers(
-    supplier_id SERIAL PRIMARY KEY,
-    supplier_name VARCHAR(50),
-    postcode VARCHAR(8),
-    phone_no VARCHAR(11)
-);
-
 CREATE TABLE items(
     item_id       SERIAL PRIMARY KEY,
     item_name     VARCHAR(50),
-    unit_price    DOUBLE PRECISION,
     selling_price DOUBLE PRECISION,
-    quantity      INT,
-    supplier_id   INT REFERENCES suppliers (supplier_id),
     on_menu       BOOLEAN
 );
 
@@ -57,15 +47,6 @@ CREATE TABLE order_items(
     item_id  INT REFERENCES items (item_id),
     quantity INT,
     PRIMARY KEY (order_id, item_id)
-);
-
-
-CREATE TABLE promotions(
-    promotion_id SERIAL PRIMARY KEY,
-    active_from  TIMESTAMP,
-    active_until TIMESTAMP,
-    offer_description VARCHAR(200),
-    item_id INT REFERENCES items (item_id)
 );
 
 CREATE TABLE employees(
@@ -500,133 +481,72 @@ VALUES
 );
 
 
-INSERT INTO suppliers
-(
-    supplier_id,
-    supplier_name,
-    postcode, 
-    phone_no
-)
-VALUES
-(
-    1,
-    'Colbecks',
-    'NE11 0HG',
-    '01914824242'
-),
-(
-    2,
-    'JJs',
-    'NE4 7LA',
-    '01992701701'
-),
-(
-    3,
-    'Peter''s Bakery',
-    'NE5 4BR',
-    '01912861331'
-);
-
-
 INSERT INTO items
 (
     item_id,       
-    item_name,     
-    unit_price,    
-    selling_price,
-    quantity,      
-    supplier_id,   
+    item_name,        
+    selling_price,        
     on_menu       
 )
 VALUES
 (
     1,
     'Fish',
-    5.00,
     8.50,
-    200,
-    1,
     'true'
 ),
 (
     2,
     'Chips',
-    1.00,
     3.00,
-    200,
-    1,
     'true'
 ),
 (
     3,
     'Smokey Sausage',
-    1.00,
     2.30,
-    200,
-    1,
     'true'
 ),
 (
     4,
     'Mince Pie',
-    1.30,
     3.00,
-    200,
-    3,
     'true'
 ),
 (
     5,
     'Steak Pie',
-    1.35,
     3.05,
-    200,
-    3,
     'true'
 ),
 (
     6,
     'Curry Sauce',
-    0.20,
     1.20,
-    200,
-    1,
     'true'
 ),
 (
     7,
     'Gravy Sauce',
-    0.15,
     1.20,
-    200,
-    1,
     'true'
 ),
 (
     8,
     'Battered Sausage',
-    2.00,
     4.00,
-    200,
-    1,
     'true'
 ),
 (
     9,
     'Chicken Nuggets',
-    1.50,
     3.00,
-    200,
-    2,
     'true'
 ),
 (
     10,
     'Can of pop',
-    0.30,
     1.00,
-    200,
-    2,
     'true'
 );
 
@@ -778,29 +698,7 @@ VALUES
     3
 );
 
-INSERT INTO promotions
-(
-    promotion_id,
-    active_from, 
-    active_until,
-    offer_description,
-    item_id 
-)
-VALUES
-(
-    1,
-    '2023-02-20 00:30:00',
-    '2023-12-20 00:30:00',
-    'Limited time only - chicken nuggets - buy one portion, get one half price!',
-    9
-),
-(
-    2,
-    '2023-03-30 00:30:00',
-    '2023-07-01 00:30:00',
-    'Limited time only - curry sauce - now half price!',
-    6
-);
+
 
 INSERT INTO employees
 (
