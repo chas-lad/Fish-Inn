@@ -12,7 +12,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
 import Error from "./components/Errors/Error";
 import Home from "./components/Main/Home";
-import Analytics from "./components/Main/Analytics";
+import Analytics from "./components/Analytics/Analytics";
 import Menu from "./components/Menu/Menu";
 import Profile from "./components/Main/Profile";
 import EmployeeList from "./components/Employees/EmployeeList";

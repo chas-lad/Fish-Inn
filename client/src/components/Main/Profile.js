@@ -23,7 +23,7 @@ export default function Profile(){
 
     const user_name = localStorage.getItem("user");
     
-    // I'm going to presume nobody over 100 or younger than 18 is going to be running a business
+    // I'm going to presume nobody over 100 or younger than 18 is going to be running the business...
     let today = new Date();
     let year = today.getFullYear();
     let minYear = year - 100;

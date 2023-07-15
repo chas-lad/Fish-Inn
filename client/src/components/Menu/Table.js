@@ -14,7 +14,7 @@ export const Table = ({items, editItem}) => {
                     £ {(item.selling_price).toFixed(2)}
                 </td>
                 <td class="px-6 py-4">
-                    {item.on_menu ? 'Yes' : 'NO' }
+                    {item.on_menu ? 'Yes' : 'No' }
                 </td>
                 <td>
                     <span>
@@ -25,14 +25,14 @@ export const Table = ({items, editItem}) => {
 
 
   return (
-    <div>
-            <table>
-                <thead>
+    <div className="relative overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                     <tr>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Available on menu today?</th>
-                        <th>Actions</th>
+                        <th scope="col" class="px-6 py-3">Item Name</th>
+                        <th scope="col" class="px-6 py-3">Price</th>
+                        <th scope="col" class="px-6 py-3">Available on menu today?</th>
+                        <th scope="col" class="px-6 py-3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
 import Datetime from "react-datetime";
 import { Button } from "primereact/button";
@@ -58,7 +58,7 @@ export default function AddEventModal({isOpen, onClose, onEventAdded, change, em
                     <Datetime value={end} onChange={date => setEnd(date)} />
                 </div>
 
-                <button>Add Event</button>
+                <button className="text-white bg-indigo-500 rounded-sm m-4">Add Event</button>
             </form>
                 <Button onClick={handleClose}>Close</Button>
         </Modal>

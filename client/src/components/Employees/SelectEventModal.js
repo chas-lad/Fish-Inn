@@ -6,11 +6,6 @@ import { Button } from "primereact/button";
 
 export default function SelectEventModal({isOpen, onClose, eventInfo, onEventDeleted}) {
 
-    const [employeeName, setEmployeeName] = useState("")
-    const [start, setStart] = useState(new Date());
-    const [end, setEnd] = useState(new Date());
-    
-
     const handleDelete = () => {
         onEventDeleted(eventInfo);
         
@@ -27,9 +22,11 @@ export default function SelectEventModal({isOpen, onClose, eventInfo, onEventDel
             <p>Shift Date: {eventInfo && (eventInfo.startStr).substring(0,10)}</p>
             <p>Shift Start Time: {eventInfo && (eventInfo.startStr).substring(11,16)}</p>
             <p>Shift End Time: {eventInfo && (eventInfo.endStr).substring(11,16)}</p>
-    
-            <Button onClick={handleDelete}>Delete Shift</Button>
-            <Button onClick={handleClose}>Close</Button>
+
+            <div className="mt-10 grid gap-4 grid-cols-2 float-left">
+                <Button className='w-32' onClick={handleDelete}>Delete Shift</Button>
+                <Button className='w-32' onClick={handleClose}>Close</Button>
+            </div>
         
         </Modal>
     )

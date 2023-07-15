@@ -80,7 +80,7 @@ export default function Menu(){
         if(itemToEdit === null){
             setModalOpen(false)
         } 
-        // If im closing the edit item modal (itemToEdit won't be null)
+        // If I'm closing the edit item modal (itemToEdit won't be null)
         else{ 
             setModalOpen(false)
             setItemToEdit(null)
@@ -98,7 +98,7 @@ export default function Menu(){
 
         <h1>Menu</h1>
         <Table items={items} editItem={handleEditItem}/>
-        <button className='className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-5"' onClick={() => setModalOpen(true)}>Add</button>
+        <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-5" onClick={() => setModalOpen(true)}>Add</button>
         <EventModal isOpen={modalOpen} closeModal={() => handleClose} onSubmit={handleSubmit} defaultValue={itemToEdit !== null && items.filter( (item) => (item.item_id == itemToEdit))[0] }/>
 
         </div>

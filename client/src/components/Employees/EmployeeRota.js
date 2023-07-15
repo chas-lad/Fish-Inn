@@ -13,7 +13,6 @@ import EmployeeHeading from "./EmployeeHeading";
 import AddEventModal from "./AddEventModal";
 import SelectEventModal from "./SelectEventModal";
 
-
 export default function EmployeeRota(){
     const [employees, setEmployees] = useState([]);
     const [addEventModalOpen, setAddEventModalOpen] = useState(false);
@@ -51,7 +50,7 @@ export default function EmployeeRota(){
     // NOTE it is important to add the event/scehdule directly to the current mounted calendar component
     // as well as the database. This is because we only pull all schedules from our database when our calendar component
     // is first mounted
-    // firing .addEvent() in this function causes the eventAdd prop's function to be fired in the Calendar
+    // firing .addEvent() in this function causes the 'eventAdd' prop's function to be fired in the Calendar
 
     const onEventAdded = event => {
         let calendarApi = calendarRef.current.getApi()
@@ -150,8 +149,7 @@ export default function EmployeeRota(){
                 <EmployeeHeading/>
 
                 <section>
-
-                <button onClick={()=> setAddEventModalOpen(true)}>Add Event</button>
+                <button className="group relative  justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-5" onClick={()=> setAddEventModalOpen(true)}>Add Event</button>
                 <div style={{position:"relative", zIndex: 0}}>
                     <FullCalendar
                         ref={calendarRef}
