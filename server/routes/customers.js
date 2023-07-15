@@ -7,11 +7,11 @@ const  {
 } = require('../controllers/customers.js')
 
 
-// get details about the customer who has placed the most orders
+// get details about the customer(s) who have placed the most orders
 router.get("/mostPlacedOrders", getMostPlacedOrderCustomer);
 
 // get the average age of customers
-router.get("/", getAverageCustomerAge);
+router.get("/averageCustomerAge", getAverageCustomerAge);
 
 
 module.exports = router;
