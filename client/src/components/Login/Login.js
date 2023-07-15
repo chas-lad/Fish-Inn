@@ -29,7 +29,6 @@ export default function Login({userCreated}) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      console.log('here')
       if(user_name === "" || password  === ""){
         setError("Please enter values into both fields")
         return

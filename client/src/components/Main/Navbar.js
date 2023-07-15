@@ -17,7 +17,6 @@ export default function Navbar(){
       }, [navigate]);
       // const loggedInUser = localStorage.getItem("user");
 
-      // console.log(loggedInUser)
       // logout the user
       const handleLogout = () => {
         localStorage.clear();

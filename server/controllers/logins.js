@@ -30,7 +30,6 @@ const createAdminAccount = (async (req,res)=>{
             ,
             [user_name, first_name, surname, dob, email, password]);
         res.json(newAdminAccount);
-        console.log(req.body);
     }
     catch (err) {
         console.error(err.message);
@@ -65,7 +64,6 @@ const getAdminAccount = (async (req, res) => {
         WHERE user_name = $1
         `, 
         [user_name]);
-      console.log(adminAccount)
       if(adminAccount.rowCount === 0){
         res.json({
             "error": "404",
@@ -118,8 +116,9 @@ const getAdminAccount = (async (req, res) => {
         [user_name]);
 
       res.json("Admin account was deleted!");
+      
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
     }
   });
 

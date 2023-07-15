@@ -19,7 +19,6 @@ export default function Profile(){
     useEffect(() => {
         setError("");
         fetchDetails();
-        console.log('yo')
       }, [detailsChanged]);
 
     const user_name = localStorage.getItem("user");
@@ -54,8 +53,6 @@ export default function Profile(){
         e.preventDefault();
         try {
         
-          console.log(new_email)
-          console.log(error)
           if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(new_email))){
             setError("Please enter a valid email address");
             return

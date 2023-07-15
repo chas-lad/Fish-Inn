@@ -71,7 +71,6 @@ const getEmployeeSchedules = (async (req, res) => {
 const createEmployeeSchedule = (async (req,res)=>{
   try{
       const { emp_id } = req.params;
-      console.log(emp_id)
       const { start_date_time, end_date_time } = req.body; 
       const newEmployeeSchedule = await pool.query(
           `
@@ -94,7 +93,6 @@ const createEmployeeSchedule = (async (req,res)=>{
           ,
           [emp_id, start_date_time, end_date_time]);
       res.json(newEmployeeSchedule);
-      console.log(req.body);
   }
   catch (err) {
       console.error(err.message);
@@ -115,7 +113,6 @@ const deleteEmployeeSchedule = (async (req,res)=>{
           ,
           [emp_id, start_date_time]);
       res.json(deletedEmployeeSchedule);
-      console.log(req.body);
   }
   catch (err) {
       console.error(err.message);

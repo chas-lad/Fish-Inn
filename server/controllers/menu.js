@@ -69,7 +69,6 @@ const createItem = (async (req,res)=>{
             ,
             [ item_name, selling_price, on_menu ]);
         res.json(newItem);
-        console.log(req.body);
     }
     catch (err) {
         console.error(err.message);

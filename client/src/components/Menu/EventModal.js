@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import Modal from 'react-modal'
 export const EventModal = ({isOpen, closeModal, onSubmit, defaultValue}) => {
-  // console.log(defaultValue)
   const [formState, setFormState] = useState(
     defaultValue || {
     item_name: "",
@@ -11,7 +10,6 @@ export const EventModal = ({isOpen, closeModal, onSubmit, defaultValue}) => {
   })
   const [errors, setErrors] = useState("");
 
-  console.log(formState)
   const validateForm = () => {
     if(formState.item_name && formState.selling_price && formState.on_menu){
       setErrors("")
@@ -68,6 +66,7 @@ export const EventModal = ({isOpen, closeModal, onSubmit, defaultValue}) => {
           {errors && <div>{`Please include: ${errors}`}</div>}
           <button type="submit" onClick={handleSubmit}>Submit</button>
       </form>
+          <button onClick={closeModal()}>Close</button>
     </Modal>
     
   )

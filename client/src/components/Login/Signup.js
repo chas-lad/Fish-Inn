@@ -51,7 +51,6 @@ export default function Signup(){
         e.preventDefault();
         try {
         
-            console.log(error)
           // General field validation checks
           if(user_name === "" ||
              first_name === "" || 
