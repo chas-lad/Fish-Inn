@@ -8,7 +8,7 @@ const  {
 
 
 // get details about the customer(s) who have placed the most orders
-router.get("/mostPlacedOrders", getMostPlacedOrderCustomer);
+router.get("/mostPlacedOrderCustomers", getMostPlacedOrderCustomer);
 
 // get the average age of customers
 router.get("/averageCustomerAge", getAverageCustomerAge);

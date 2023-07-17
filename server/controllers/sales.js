@@ -6,9 +6,8 @@ const getYearlySales = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            EXTRACT('Year' FROM total_prices.order_timestamp) AS Year,
-            SUM(total_prices.total_price) AS Revenue
-
+            EXTRACT('Year' FROM total_prices.order_timestamp) AS year,
+            SUM(total_prices.total_price) AS revenue
         FROM
             (SELECT
                 o.order_timestamp,
@@ -42,9 +41,8 @@ const getMonthlySales = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            EXTRACT('Month' FROM total_prices.order_timestamp) AS Month,
-            SUM(total_prices.total_price) AS Revenue
-
+            EXTRACT('Month' FROM total_prices.order_timestamp) AS month,
+            SUM(total_prices.total_price) AS revenue
         FROM
             (SELECT
                 o.order_timestamp,
@@ -79,9 +77,8 @@ const getWeeklySales = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            EXTRACT('Week' FROM total_prices.order_timestamp) AS Week,
-            SUM(total_prices.total_price) AS Revenue
-
+            EXTRACT('Week' FROM total_prices.order_timestamp) AS week,
+            SUM(total_prices.total_price) AS revenue
         FROM
             (SELECT
                 o.order_timestamp,
@@ -119,9 +116,8 @@ const getDailySales = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            EXTRACT('Day' FROM total_prices.order_timestamp) AS Week,
-            SUM(total_prices.total_price) AS Revenue
-
+            EXTRACT('Day' FROM total_prices.order_timestamp) AS day,
+            SUM(total_prices.total_price) AS revenue
         FROM
             (SELECT
                 o.order_timestamp,
@@ -181,7 +177,8 @@ const getBestSellingItemsByDayOfWeek = (async (req, res) => {
         SELECT
             a.day,
             a.highest_quantity,
-            b.item_id
+            b.item_id,
+            i.item_name
         FROM
         (
         -- This shows the highest selling quantity of a product for each day of the week
@@ -225,10 +222,15 @@ const getBestSellingItemsByDayOfWeek = (async (req, res) => {
                 oi.item_id) AS b
         ON
             a.day = b.day
+        INNER JOIN 
+            items i
+        ON
+            b.item_id = i.item_id
         WHERE
             a.highest_quantity = b.total_amount_of_item_sold_on_this_dow
-            
-
+        ORDER BY
+            a.day ASC
+        
         `);
       res.json(allItems.rows);
     } catch (err) {
@@ -241,7 +243,7 @@ const getAverageOrderValue = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            AVG(total_price)
+            AVG(total_price) AS average_order_value
         FROM
             (SELECT
                 oi.order_id,
@@ -267,7 +269,7 @@ const getAverageOrderRating = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT
-            AVG(orders.review_star_rating)
+            AVG(orders.review_star_rating) AS average_order_rating
         FROM
             orders
         `);

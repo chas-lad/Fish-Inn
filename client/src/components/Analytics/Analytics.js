@@ -3,6 +3,8 @@ import Footer from "../Main/Footer";
 
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
+import Sales from "./Sales";
+import Customers from "./Customers";
 
 export default function Analytics(){
 
@@ -17,9 +19,7 @@ export default function Analytics(){
 
         <h1>Analytics</h1>
         <Dropdown value={selectedOption} options={options} onChange={(e) => setSelectedOption(e.value)}/>
-
-        {/* if selectedoption === 'sales' return sales component else return customer component */}
-
+        {selectedOption === 'Sales' ? <Sales/> : <Customers/>}
 
         </div>
         <Footer/>

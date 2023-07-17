@@ -26,10 +26,10 @@ router.get("/weeklySales", getWeeklySales);
 router.get("/dailySales", getDailySales);
 
 // get the best selling item(s) on the menu (since the very first order placed)
-router.get("/bestSellingItem", getBestSellingItems);
+router.get("/bestSellingItems", getBestSellingItems);
 
 // get best selling item(s) for each day of the week (since the very first order placed)
-router.get("/bestSellingItemDOW", getBestSellingItemsByDayOfWeek);
+router.get("/bestSellingItemsDOW", getBestSellingItemsByDayOfWeek);
 
 // get the average order value (since the very first order placed)
 router.get("/averageOrderValue", getAverageOrderValue);
