@@ -6,7 +6,14 @@ const getMostPlacedOrderCustomer = (async (req, res) => {
       const allItems = await pool.query(
         `
         SELECT 
-          *
+          c.first_name,
+          c.surname,
+          c.email,
+          AGE(CURRENT_TIMESTAMP, c.dob) AS age,
+          c.join_date,
+          c.phone_no,
+          c.postcode,
+          top_customers.orders_placed
         FROM
           customers c
         INNER JOIN
@@ -23,9 +30,9 @@ const getMostPlacedOrderCustomer = (async (req, res) => {
             c.customer_id
           ORDER BY
             COUNT(c.customer_id) DESC
-          FETCH FIRST 1 ROWS WITH TIES) AS top_customer
+          FETCH FIRST 1 ROWS WITH TIES) AS top_customers
         ON
-          c.customer_id = top_customer.customer_id
+          c.customer_id = top_customers.customer_id
         `);
       res.json(allItems.rows);
     } catch (err) {

@@ -8,7 +8,7 @@ import Customers from "./Customers";
 
 export default function Analytics(){
 
-    const [selectedOption, setSelectedOption] = useState('Sales')
+    const [selectedOption, setSelectedOption] = useState('')
     const options = ['Sales', 'Customers']
 
     return(
@@ -18,8 +18,8 @@ export default function Analytics(){
 
 
         <h1>Analytics</h1>
-        <Dropdown value={selectedOption} options={options} onChange={(e) => setSelectedOption(e.value)}/>
-        {selectedOption === 'Sales' ? <Sales/> : <Customers/>}
+        <Dropdown value={selectedOption} placeholder="Select analytic type to view" options={options} onChange={(e) => setSelectedOption(e.value)}/>
+        {selectedOption === '' || selectedOption === 'Sales' ? <Sales/> : <Customers/>}
 
         </div>
         <Footer/>

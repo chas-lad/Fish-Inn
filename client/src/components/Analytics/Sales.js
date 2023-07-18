@@ -5,7 +5,7 @@ import RevenueBarChart from "./RevenueBarChart";
 
 export default function Sales() {
     
-    const [selectedRevenueOption, setSelectedRevenueOption] = useState('Revenue By Year')
+    const [selectedRevenueOption, setSelectedRevenueOption] = useState('')
     const [yearlySales, setYearlySales] = useState([]);
     const [monthlySales, setMonthlySales] = useState([]);
     const [weeklySales, setWeeklySales] = useState([]);
@@ -107,44 +107,70 @@ export default function Sales() {
     };
     
     return(
-        <>
-            <Dropdown value={selectedRevenueOption} options={revenueOptions} onChange={(e) => setSelectedRevenueOption(e.value)}/>
+        <>  
 
-            {selectedRevenueOption === 'Revenue By Year' && <RevenueBarChart dataKey='year' data={yearlySales}/>}
-            {selectedRevenueOption === 'Revenue By Month (for this current year)' && <RevenueBarChart dataKey='month' data={monthlySales}/>}
-            {selectedRevenueOption === 'Revenue By Week (for this current year)' && <RevenueBarChart dataKey='week' data={weeklySales}/>}
-            {selectedRevenueOption === 'Revenue By Day (for this current week)' && <RevenueBarChart dataKey='day' data={dailySales}/>}
+            <div className="flex justify-center w-full items-center">
+
+                <div className="mb-40">
+                    <div className="ml-10">
+                        <Dropdown placeholder="Select a time period of revenue to view" className="mb-10"value={selectedRevenueOption} options={revenueOptions} onChange={(e) => setSelectedRevenueOption(e.value)}/>
+                    </div>
+                    
+                    {selectedRevenueOption === '' || selectedRevenueOption === 'Revenue By Year' ? <RevenueBarChart dataKey='year' data={yearlySales}/> : <></>}
+                    {selectedRevenueOption === 'Revenue By Month (for this current year)' && <RevenueBarChart dataKey='month' data={monthlySales}/>}
+                    {selectedRevenueOption === 'Revenue By Week (for this current year)' && <RevenueBarChart dataKey='week' data={weeklySales}/>}
+                    {selectedRevenueOption === 'Revenue By Day (for this current week)' && <RevenueBarChart dataKey='day' data={dailySales}/>}
+                </div>
+                <div className="text-center pr-20 ">
+                        <h2>Best Selling Item(s) by the day of the week</h2>
+                        <div className="text-xl font-nunito-regular text-left inline-block border-solid border-black border-4 rounded-lg p-10 bg-white">
+                            {bestSellingItemsDOW.map(item => 
+                                <div>
+                                    <p>{item.day}: {item.item_name}  (total sold: {item.highest_quantity})</p>
+                                </div>
+                            )}
+                        </div>
+                </div>
+            </div>
+
+            <div className="flex justify-center w-full items-center mt-10">
+
+                <div className="text-center pr-20 ">
+                    <h2>Best Selling Item(s)</h2>
+                    <div className="text-xl font-nunito-regular text-left inline-block border-solid border-black border-4 rounded-lg p-10 bg-white">
+                        {bestSellingItems.map(item =>
+                            <div key={item.item_id}>
+                                <p>Item Name: {item.item_name}</p>
+                                <p>Selling Price: {item.selling_price}</p>
+                                <p>Total Sold: {item.total_sold}</p>
+                            </div>
+                            )}
+                    </div>
+                </div>
+
+                <div className="text-center pr-20 ">
+                    <h2>Average Order Value</h2>
+                    <div className="text-xl font-nunito-regular text-left inline-block border-solid border-black border-4 rounded-lg p-10 bg-white">
+                    {averageOrderValue.map(order => 
+                        <div>
+                            <p>£{order.average_order_value.toFixed(2)}</p>
+                        </div>
+                    )}
+                    </div>
+                </div>
+
+                <div className="text-center pr-20 ">
+                    <h2>Average Order Rating</h2>
+                    <div className="text-xl font-nunito-regular text-left inline-block border-solid border-black border-4 rounded-lg p-10 bg-white">
+                    {averageOrderRating.map(order => 
+                        <div>
+                            <p>{order.average_order_rating.substring(0,4)}</p>
+                        </div>
+                    )}
+                    </div>
+                </div>
+            </div>
             
-            <h3>Best Selling Item(s)</h3>
-            {bestSellingItems.map(item =>
-                <div key={item.item_id}>
-                    <p>Item Name: {item.item_name}</p>
-                    <p>Selling Price: {item.selling_price}</p>
-                    <p>Total Sold: {item.total_sold}</p>
-                </div>
-                )}
-
-            <h3>Best Selling Item(s) by the day of the week</h3>   
-            {bestSellingItemsDOW.map(item => 
-                <div>
-                    <p>Best Selling Item For {item.day}: {item.item_name}</p>
-                    <p>Number of items sold: {item.highest_quantity}</p>
-                </div>
-            )}
-
-            <h3>Average Order Value</h3>
-            {averageOrderValue.map(order => 
-                <div>
-                    <p>£{order.average_order_value.toFixed(2)}</p>
-                </div>
-            )}  
-            
-            <h3>Average Order Rating</h3>
-            {averageOrderRating.map(order => 
-                <div>
-                    <p>{order.average_order_rating.substring(0,4)}</p>
-                </div>
-            )}  
     
         </>
     )

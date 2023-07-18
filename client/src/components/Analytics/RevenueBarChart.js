@@ -5,7 +5,7 @@ export default function RevenueBarChart({dataKey, data}) {
     return(
         <>
             { data.length == 0 ? <h2>No data for this figure!</h2> :
-            <BarChart width={730} height={250} data={data}>
+            <BarChart width={730} height={400} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey={dataKey} >
                     <Label style={{
